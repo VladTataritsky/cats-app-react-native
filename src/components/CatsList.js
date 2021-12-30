@@ -1,6 +1,13 @@
 import React from 'react';
 
-import {StyleSheet, Text, View, FlatList, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  TouchableOpacity,
+} from 'react-native';
 
 const catsData = [
   {
@@ -51,29 +58,33 @@ const catsData = [
   },
 ];
 
-const Item = ({catInfo: {name, breed, imgSrc, shortDescription}}) => (
-  <View style={styles.list_item_container}>
+const Item = ({catInfo, navigation}) => (
+  <TouchableOpacity
+    style={styles.list_item_container}
+    onPress={() => navigation.navigate('Details', catInfo)}>
     <View style={styles.list_item_header}>
-      <Text style={styles.list_item_header_text}>{name}</Text>
-      <Text style={styles.list_item_header_text}>{breed}</Text>
+      <Text style={styles.list_item_header_text}>{catInfo.name}</Text>
+      <Text style={styles.list_item_header_text}>{catInfo.breed}</Text>
     </View>
     <Image
       style={styles.list_item_img}
       source={{
-        uri: imgSrc,
+        uri: catInfo.imgSrc,
       }}
     />
     <View>
-      <Text style={styles.list_item_short_description}>{shortDescription}</Text>
+      <Text style={styles.list_item_short_description}>
+        {catInfo.shortDescription}
+      </Text>
     </View>
-  </View>
+  </TouchableOpacity>
 );
 
-const CatsList = () => (
+const CatsList = ({navigation}) => (
   <FlatList
     data={catsData}
     keyExtractor={item => item.id}
-    renderItem={({item}) => <Item catInfo={item} />}
+    renderItem={({item}) => <Item catInfo={item} navigation={navigation} />}
   />
 );
 
