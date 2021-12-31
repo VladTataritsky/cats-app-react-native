@@ -23,7 +23,7 @@ const DetailsScreen = ({route, navigation}) => {
           <Text style={styles.text_context}>{breed}</Text>
         </View>
         <View style={styles.view}>
-          <Text>Age:</Text>
+          <Text>Age(years):</Text>
           <Text style={styles.text_context}>{age}</Text>
         </View>
         <View style={styles.view}>
