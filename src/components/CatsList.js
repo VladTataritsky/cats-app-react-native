@@ -61,7 +61,8 @@ const catsData = [
 const Item = ({catInfo, navigation}) => (
   <TouchableOpacity
     style={styles.list_item_container}
-    onPress={() => navigation.navigate('Details', catInfo)}>
+    onPress={() => navigation.navigate('Details', catInfo, navigation)}
+    activeOpacity={1}>
     <View style={styles.list_item_header}>
       <Text style={styles.list_item_header_text}>{catInfo.name}</Text>
       <Text style={styles.list_item_header_text}>{catInfo.breed}</Text>

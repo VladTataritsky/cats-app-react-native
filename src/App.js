@@ -15,7 +15,9 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Cats">
+      <Stack.Navigator
+        initialRouteName="Cats"
+        screenOptions={{headerTitleAlign: 'center'}}>
         <Stack.Screen name="Cats" component={MainScreen} />
         <Stack.Screen name="Details" component={DetailsScreen} />
       </Stack.Navigator>
