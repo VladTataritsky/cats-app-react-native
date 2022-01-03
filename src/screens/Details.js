@@ -37,7 +37,7 @@ const DetailsScreen = ({route, navigation}) => {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#ffbf0f',
+    backgroundColor: 'rgba(255, 191, 15, 1)',
     flex: 1,
   },
   view_container: {
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
   },
   text_context: {
     fontSize: 22,
-    color: '#2b2b29',
+    color: 'rgba(43, 43, 41, 1)',
   },
 });
 
-export default DetailsScreen;
+export default React.memo(DetailsScreen);

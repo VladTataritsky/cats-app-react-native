@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState} from 'react';
 
 import {StyleSheet, View} from 'react-native';
 import CatsList from '../components/CatsList';
@@ -55,30 +55,13 @@ const fetchedCatsData = [
 
 const MainScreen = ({navigation}) => {
   const [catsList, setCatsList] = useState(fetchedCatsData);
-  const [searchInputValue, setSearchInputValue] = useState('');
-
-  const isIncludesToSearchValue = useCallback(
-    str =>
-      str.toLocaleLowerCase().includes(searchInputValue.toLocaleLowerCase()),
-    [searchInputValue],
-  );
-
-  useEffect(() => {
-    const filteredCats = [...fetchedCatsData].filter(
-      cat =>
-        isIncludesToSearchValue(cat.name) ||
-        isIncludesToSearchValue(cat.breed) ||
-        isIncludesToSearchValue(cat.shortDescription),
-    );
-    setCatsList(filteredCats);
-  }, [searchInputValue, isIncludesToSearchValue]);
 
   return (
     <View style={styles.root}>
       <CatsList navigation={navigation} catsList={catsList} />
       <SearchInput
-        searchInputValue={searchInputValue}
-        setSearchInputValue={setSearchInputValue}
+        setCatsList={setCatsList}
+        fetchedCatsData={fetchedCatsData}
       />
     </View>
   );
@@ -86,10 +69,10 @@ const MainScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   root: {
-    backgroundColor: '#ffbf0f',
+    backgroundColor: 'rgba(255, 191, 15, 1)',
     flexDirection: 'column',
     flex: 1,
   },
 });
 
-export default MainScreen;
+export default React.memo(MainScreen);

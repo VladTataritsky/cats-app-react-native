@@ -1,21 +1,41 @@
-import React from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 
 import {StyleSheet, TextInput} from 'react-native';
 
-const SearchInput = ({searchInputValue, setSearchInputValue}) => (
-  <TextInput
-    style={styles.input}
-    placeholder="Search Cat"
-    value={searchInputValue}
-    onChangeText={setSearchInputValue}
-  />
-);
+const SearchInput = ({setCatsList, fetchedCatsData}) => {
+  const [searchInputValue, setSearchInputValue] = useState('');
+
+  const isIncludesToSearchValue = useCallback(
+    str =>
+      str.toLocaleLowerCase().includes(searchInputValue.toLocaleLowerCase()),
+    [searchInputValue],
+  );
+
+  useEffect(() => {
+    const filteredCats = [...fetchedCatsData].filter(
+      cat =>
+        isIncludesToSearchValue(cat.name) ||
+        isIncludesToSearchValue(cat.breed) ||
+        isIncludesToSearchValue(cat.shortDescription),
+    );
+    setCatsList(filteredCats);
+  }, [searchInputValue, isIncludesToSearchValue, fetchedCatsData, setCatsList]);
+
+  return (
+    <TextInput
+      style={styles.input}
+      placeholder="Search Cat"
+      value={searchInputValue}
+      onChangeText={setSearchInputValue}
+    />
+  );
+};
 
 const styles = StyleSheet.create({
   input: {
     height: 40,
     borderWidth: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#ffffff',
     fontSize: 18,
     padding: 10,
     borderRadius: 4,
@@ -25,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SearchInput;
+export default React.memo(SearchInput);

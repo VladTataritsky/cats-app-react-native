@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo, useCallback} from 'react';
 
 import {
   StyleSheet,
@@ -9,28 +9,34 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Item = ({catInfo, navigation}) => (
-  <TouchableOpacity
-    style={styles.list_item_container}
-    onPress={() => navigation.navigate('Details', catInfo, navigation)}
-    activeOpacity={1}>
-    <View style={styles.list_item_header}>
-      <Text style={styles.list_item_header_text}>{catInfo.name}</Text>
-      <Text style={styles.list_item_header_text}>{catInfo.breed}</Text>
-    </View>
-    <Image
-      style={styles.list_item_img}
-      source={{
-        uri: catInfo.imgSrc,
-      }}
-    />
-    <View>
-      <Text style={styles.list_item_short_description}>
-        {catInfo.shortDescription}
-      </Text>
-    </View>
-  </TouchableOpacity>
-);
+const Item = memo(({catInfo, navigation}) => {
+  const navigateToDetails = useCallback(
+    () => navigation.navigate('Details', catInfo, navigation),
+    [catInfo, navigation],
+  );
+  return (
+    <TouchableOpacity
+      style={styles.list_item_container}
+      onPress={navigateToDetails}
+      activeOpacity={1}>
+      <View style={styles.list_item_header}>
+        <Text style={styles.list_item_header_text}>{catInfo.name}</Text>
+        <Text style={styles.list_item_header_text}>{catInfo.breed}</Text>
+      </View>
+      <Image
+        style={styles.list_item_img}
+        source={{
+          uri: catInfo.imgSrc,
+        }}
+      />
+      <View>
+        <Text style={styles.list_item_short_description}>
+          {catInfo.shortDescription}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+});
 
 const CatsList = ({navigation, catsList}) => {
   return catsList.length ? (
@@ -67,7 +73,7 @@ const styles = StyleSheet.create({
   list_item_header_text: {
     fontSize: 24,
     fontWeight: '500',
-    color: '#171716',
+    color: 'rgba(23, 23, 22, 1)',
   },
   list_item_img: {
     width: '100%',
@@ -76,7 +82,7 @@ const styles = StyleSheet.create({
   list_item_short_description: {
     fontSize: 20,
     paddingTop: 8,
-    color: '#2b2b29',
+    color: 'rgba(43, 43, 41, 1)',
   },
   no_found_text: {
     marginTop: 20,
@@ -85,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CatsList;
+export default memo(CatsList);
